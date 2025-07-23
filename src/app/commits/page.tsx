@@ -8,25 +8,41 @@ import { Skeleton } from "@/components/ui/skeleton"
 import { GitCommit, GitBranch, ExternalLink, Github, Clock, ArrowLeft } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
-// Função para buscar os commits do GitHub
+type GithubRepo = {
+  name: string;
+  html_url: string;
+  description: string | null;
+  stargazers_count: number;
+  language: string | null;
+};
+
+type GithubCommit = {
+  sha: string;
+  commit: {
+    message: string;
+    author: {
+      name: string;
+      date: string;
+    };
+  };
+  html_url: string;
+};
+
 async function getGithubCommits() {
-  // Substitua "username" pelo nome de usuário real do GitHub
   const username = "gui1416"
 
   try {
-    // Primeiro, buscamos os repositórios públicos do usuário
     const reposResponse = await fetch(`https://api.github.com/users/${username}/repos?sort=updated&per_page=5`, {
-      next: { revalidate: 3600 }, // Revalidar a cada hora
+      next: { revalidate: 3600 },
     })
 
     if (!reposResponse.ok) {
       throw new Error(`Erro ao buscar repositórios: ${reposResponse.status}`)
     }
 
-    const repos = await reposResponse.json()
+    const repos: GithubRepo[] = await reposResponse.json()
 
-    // Para cada repositório, buscamos os commits mais recentes
-    const commitsPromises = repos.map(async (repo) => {
+    const commitsPromises = repos.map(async (repo: GithubRepo) => {
       const commitsResponse = await fetch(`https://api.github.com/repos/${username}/${repo.name}/commits?per_page=5`, {
         next: { revalidate: 3600 },
       })
@@ -36,9 +52,9 @@ async function getGithubCommits() {
         return []
       }
 
-      const commits = await commitsResponse.json()
+      const commits: GithubCommit[] = await commitsResponse.json()
 
-      return commits.map((commit) => ({
+      return commits.map((commit: GithubCommit) => ({
         repo: {
           name: repo.name,
           url: repo.html_url,
@@ -51,13 +67,12 @@ async function getGithubCommits() {
         author: commit.commit.author.name,
         date: commit.commit.author.date,
         url: commit.html_url,
-        branch: "main", // A API não retorna a branch diretamente, então assumimos main/master
+        branch: "main",
       }))
     })
 
     const commitsArrays = await Promise.all(commitsPromises)
 
-    // Flatten e ordena os commits por data (mais recentes primeiro)
     const allCommits = commitsArrays.flat().sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
 
     return allCommits
@@ -67,15 +82,28 @@ async function getGithubCommits() {
   }
 }
 
-// Componente para exibir um commit
-function CommitCard({ commit }) {
+type Commit = {
+  repo: {
+    name: string;
+    url: string;
+    description: string | null;
+    stars: number;
+    language: string | null;
+  };
+  sha: string;
+  message: string;
+  author: string;
+  date: string;
+  url: string;
+  branch: string;
+};
+
+function CommitCard({ commit }: { commit: Commit }) {
   const commitDate = new Date(commit.date)
   const timeAgo = formatDistanceToNow(commitDate, { addSuffix: true, locale: ptBR })
 
-  // Limita o tamanho da mensagem do commit
   const shortMessage = commit.message.length > 100 ? commit.message.substring(0, 97) + "..." : commit.message
 
-  // Pega apenas os primeiros 7 caracteres do SHA (padrão do GitHub)
   const shortSha = commit.sha.substring(0, 7)
 
   return (
@@ -146,7 +174,6 @@ function CommitCard({ commit }) {
   )
 }
 
-// Componente de carregamento
 function CommitSkeleton() {
   return (
     <Card className="mb-4">
@@ -175,7 +202,6 @@ function CommitSkeleton() {
   )
 }
 
-// Componente que busca e exibe os commits
 async function CommitsList() {
   const commits = await getGithubCommits()
 

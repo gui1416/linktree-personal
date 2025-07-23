@@ -14,13 +14,11 @@ export default function LinktreePage() {
      </div>
 
      <div className="flex flex-col items-center space-y-6 py-4">
-      {/* Avatar/Foto de Perfil */}
       <Avatar className="w-24 h-24 border-2 border-primary animate-fade-in">
        <AvatarImage src="https://github.com/gui1416.png?height=96&width=96" alt="Guilherme" />
        <AvatarFallback>GM</AvatarFallback>
       </Avatar>
 
-      {/* Informações do Usuário */}
       <div className="text-center space-y-2 animate-fade-in delay-100">
        <h1 className="text-2xl font-bold">Guilherme Machado</h1>
        <p className="text-muted-foreground">
@@ -28,7 +26,6 @@ export default function LinktreePage() {
        </p>
       </div>
 
-      {/* Links Importantes */}
       <div className="w-full space-y-3 pt-4">
        <LinkButton href="https://portifolio-v8.vercel.app/hero" icon="briefcase" className="animate-fade-in delay-200">
         Meu Portfólio
@@ -50,7 +47,6 @@ export default function LinktreePage() {
     </CardContent>
    </Card>
 
-   {/* Rodapé com ícones de redes sociais */}
    <footer className="mt-8 mb-4 animate-fade-in delay-500">
     <SocialIcons />
    </footer>

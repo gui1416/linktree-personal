@@ -18,7 +18,6 @@ import {
  type LucideIcon,
 } from "lucide-react"
 
-// Mapeamento de ícones disponíveis
 const icons: Record<string, LucideIcon> = {
  instagram: Instagram,
  linkedin: Linkedin,
@@ -43,7 +42,6 @@ interface LinkButtonProps {
 }
 
 export function LinkButton({ href, children, icon = "link", className = "" }: LinkButtonProps) {
- // Seleciona o ícone ou usa o padrão se não encontrar
  const IconComponent = icons[icon] || ExternalLink
 
  return (

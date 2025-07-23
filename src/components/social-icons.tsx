@@ -2,7 +2,6 @@ import type React from "react"
 import Link from "next/link"
 import { Instagram, Github, Linkedin, Mail, MessageCircle } from "lucide-react"
 
-// Interface para os links de redes sociais
 interface SocialLink {
  href: string
  icon: React.ReactNode
@@ -10,7 +9,6 @@ interface SocialLink {
 }
 
 export function SocialIcons() {
- // Lista de links de redes sociais
  const socialLinks: SocialLink[] = [
   {
    href: "https://www.instagram.com/guilhermerm2005?igsh=d2Vja3hvb21lem1i&utm_source=qr",
