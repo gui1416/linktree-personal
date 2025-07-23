@@ -1,103 +1,59 @@
-import Image from "next/image";
+import { ThemeToggle } from "@/components/theme-toggle"
+import { LinkButton } from "@/components/link-button"
+import { SocialIcons } from "@/components/social-icons"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Card, CardContent } from "@/components/ui/card"
 
-export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+export default function LinktreePage() {
+ return (
+  <div className="min-h-screen flex flex-col items-center justify-center p-4 bg-gradient-to-br from-background to-muted">
+   <Card className="w-full max-w-md mx-auto shadow-lg border-0 bg-card/80 backdrop-blur-sm animate-scale-in">
+    <CardContent className="p-6">
+     <div className="absolute top-4 right-4 animate-slide-in">
+      <ThemeToggle />
+     </div>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
-  );
+     <div className="flex flex-col items-center space-y-6 py-4">
+      {/* Avatar/Foto de Perfil */}
+      <Avatar className="w-24 h-24 border-2 border-primary animate-fade-in">
+       <AvatarImage src="https://github.com/gui1416.png?height=96&width=96" alt="Guilherme" />
+       <AvatarFallback>GM</AvatarFallback>
+      </Avatar>
+
+      {/* Informações do Usuário */}
+      <div className="text-center space-y-2 animate-fade-in delay-100">
+       <h1 className="text-2xl font-bold">Guilherme Machado</h1>
+       <p className="text-muted-foreground">
+        Desenvolvedor Full Stack & Designer UI/UX. Criando experiências digitais incríveis desde 2020.
+       </p>
+      </div>
+
+      {/* Links Importantes */}
+      <div className="w-full space-y-3 pt-4">
+       <LinkButton href="https://portifolio-v8.vercel.app/hero" icon="briefcase" className="animate-fade-in delay-200">
+        Meu Portfólio
+       </LinkButton>
+       <LinkButton href="https://drive.google.com/file/d/17Zl6Th_r_KCQN9z0tagauV2Ch9y7JDdO/view?usp=sharing" icon="file-text" className="animate-fade-in delay-300">
+        Currículo
+       </LinkButton>
+       <LinkButton href="https://drive.google.com/drive/folders/1Z9xQtGcCLisL0YaYH4XfEWrPvkxZ9Z8r?usp=sharing" icon="award" className="animate-fade-in delay-400">
+        Certificados
+       </LinkButton>
+       <LinkButton href="https://forms.gle/i5Vkv2VVyzxuJTMn6" icon="calendar" className="animate-fade-in delay-500">
+        Agendar Contato
+       </LinkButton>
+       <LinkButton href="/commits" icon="git-commit" className="animate-fade-in delay-500">
+        Últimos Commits
+       </LinkButton>
+      </div>
+     </div>
+    </CardContent>
+   </Card>
+
+   {/* Rodapé com ícones de redes sociais */}
+   <footer className="mt-8 mb-4 animate-fade-in delay-500">
+    <SocialIcons />
+   </footer>
+  </div>
+ )
 }
