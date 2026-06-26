@@ -1,17 +1,11 @@
-import * as React from "react";
-import {
-  Html,
-  Head,
-  Preview,
-  Body,
-  Container,
-  Section,
-  Img,
-  Link,
-  Text,
-  Button,
-  Hr,
-} from "@react-email/components";
+function esc(s: string): string {
+  return s
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
 
 interface AppointmentNotificationEmailProps {
   nome: string;
@@ -31,200 +25,76 @@ export function AppointmentNotificationEmail({
   horario,
   assunto,
   mensagem,
-}: AppointmentNotificationEmailProps) {
-  return (
-    <Html lang="pt">
-      <Head />
-      <Preview>Novo agendamento: {assunto} — {nome}</Preview>
-      <Body style={main}>
-        <Container style={container}>
-          <Section style={headerSection}>
-            <Link href="https://portifolio-v8.vercel.app/" target="_blank">
-              <Img
-                src="https://portifolio-v8.vercel.app/logo.png"
-                width="120"
-                height="auto"
-                alt="Guilherme Machado"
-                style={logo}
-              />
-            </Link>
-          </Section>
+}: AppointmentNotificationEmailProps): string {
+  return `<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Novo agendamento: ${esc(assunto)} — ${esc(nome)}</title>
+</head>
+<body style="margin:0;padding:0;background-color:hsl(240,4.8%,95.9%);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;">
+  <div style="display:none;max-height:0;overflow:hidden;">Novo agendamento: ${esc(assunto)} — ${esc(nome)}</div>
+  <div style="margin:0 auto;padding:32px 20px;max-width:600px;background-color:hsl(0,0%,100%);border-radius:12px;">
 
-          <Section style={titleSection}>
-            <Text style={heading}>Novo agendamento recebido</Text>
-          </Section>
+    <div style="padding-bottom:24px;text-align:center;">
+      <a href="https://portifolio-v8.vercel.app/" target="_blank">
+        <img src="https://portifolio-v8.vercel.app/logo.png" width="120" alt="Guilherme Machado" style="display:block;margin:0 auto;">
+      </a>
+    </div>
 
-          <Section style={infoCard}>
-            <Text style={infoRow}>
-              <span style={infoLabel}>Nome</span>
-              <span style={infoValue}>{nome}</span>
-            </Text>
-            <Hr style={infoHr} />
-            <Text style={infoRow}>
-              <span style={infoLabel}>E-mail</span>
-              <span style={infoValue}>{email}</span>
-            </Text>
-            <Hr style={infoHr} />
-            <Text style={infoRow}>
-              <span style={infoLabel}>Telefone</span>
-              <span style={infoValue}>{telefone}</span>
-            </Text>
-            <Hr style={infoHr} />
-            <Text style={infoRow}>
-              <span style={infoLabel}>Data</span>
-              <span style={infoValue}>{data}</span>
-            </Text>
-            <Hr style={infoHr} />
-            <Text style={infoRow}>
-              <span style={infoLabel}>Horário</span>
-              <span style={infoValue}>{horario}</span>
-            </Text>
-            <Hr style={infoHr} />
-            <Text style={infoRow}>
-              <span style={infoLabel}>Assunto</span>
-              <span style={infoValue}>{assunto}</span>
-            </Text>
-          </Section>
+    <div style="margin-bottom:24px;text-align:center;">
+      <p style="font-size:22px;font-weight:bold;color:hsl(240,10%,3.9%);margin:0;">Novo agendamento recebido</p>
+    </div>
 
-          {mensagem && (
-            <>
-              <Hr style={hr} />
-              <Section>
-                <Text style={label}>Mensagem:</Text>
-                <Text style={messageBox}>&ldquo;{mensagem}&rdquo;</Text>
-              </Section>
-            </>
-          )}
+    <div style="background-color:hsl(240,4.8%,95.9%);border-radius:8px;padding:16px 20px;">
+      <p style="font-size:15px;color:hsl(240,10%,3.9%);margin:0;padding:4px 0;">
+        <span style="font-weight:600;min-width:80px;margin-right:12px;color:hsl(240,5%,64.9%);">Nome</span>
+        <span>${esc(nome)}</span>
+      </p>
+      <hr style="border:none;border-top:1px solid hsl(240,5.9%,90%);margin:8px 0;">
+      <p style="font-size:15px;color:hsl(240,10%,3.9%);margin:0;padding:4px 0;">
+        <span style="font-weight:600;min-width:80px;margin-right:12px;color:hsl(240,5%,64.9%);">E-mail</span>
+        <span>${esc(email)}</span>
+      </p>
+      <hr style="border:none;border-top:1px solid hsl(240,5.9%,90%);margin:8px 0;">
+      <p style="font-size:15px;color:hsl(240,10%,3.9%);margin:0;padding:4px 0;">
+        <span style="font-weight:600;min-width:80px;margin-right:12px;color:hsl(240,5%,64.9%);">Telefone</span>
+        <span>${esc(telefone)}</span>
+      </p>
+      <hr style="border:none;border-top:1px solid hsl(240,5.9%,90%);margin:8px 0;">
+      <p style="font-size:15px;color:hsl(240,10%,3.9%);margin:0;padding:4px 0;">
+        <span style="font-weight:600;min-width:80px;margin-right:12px;color:hsl(240,5%,64.9%);">Data</span>
+        <span>${esc(data)}</span>
+      </p>
+      <hr style="border:none;border-top:1px solid hsl(240,5.9%,90%);margin:8px 0;">
+      <p style="font-size:15px;color:hsl(240,10%,3.9%);margin:0;padding:4px 0;">
+        <span style="font-weight:600;min-width:80px;margin-right:12px;color:hsl(240,5%,64.9%);">Horário</span>
+        <span>${esc(horario)}</span>
+      </p>
+      <hr style="border:none;border-top:1px solid hsl(240,5.9%,90%);margin:8px 0;">
+      <p style="font-size:15px;color:hsl(240,10%,3.9%);margin:0;padding:4px 0;">
+        <span style="font-weight:600;min-width:80px;margin-right:12px;color:hsl(240,5%,64.9%);">Assunto</span>
+        <span>${esc(assunto)}</span>
+      </p>
+    </div>
 
-          <Hr style={hr} />
+    ${mensagem ? `
+    <hr style="border:none;border-top:1px solid hsl(240,5.9%,90%);margin:24px 0;">
+    <div>
+      <p style="font-size:15px;font-weight:600;color:hsl(240,10%,3.9%);margin-bottom:8px;">Mensagem:</p>
+      <p style="background-color:hsl(240,4.8%,95.9%);padding:16px;border-radius:6px;font-size:15px;color:hsl(240,10%,3.9%);font-style:italic;margin:0;">&ldquo;${esc(mensagem)}&rdquo;</p>
+    </div>
+    ` : ""}
 
-          <Section style={footerSection}>
-            <Text style={footerText}>
-              Responda diretamente ao contato clicando abaixo.
-            </Text>
-            <Button style={button} href={`mailto:${email}`}>
-              Responder {nome}
-            </Button>
-          </Section>
-        </Container>
-      </Body>
-    </Html>
-  );
+    <hr style="border:none;border-top:1px solid hsl(240,5.9%,90%);margin:24px 0;">
+
+    <div style="text-align:center;padding-top:8px;">
+      <p style="font-size:14px;color:hsl(240,5%,64.9%);margin-bottom:16px;">Responda diretamente ao contato clicando abaixo.</p>
+      <a href="mailto:${esc(email)}" style="display:inline-block;background-color:hsl(240,5.9%,10%);color:hsl(0,0%,98%);padding:12px 28px;border-radius:6px;font-size:15px;text-decoration:none;font-weight:500;">Responder ${esc(nome)}</a>
+    </div>
+
+  </div>
+</body>
+</html>`;
 }
-
-const colors = {
-  primary: "hsl(240, 5.9%, 10%)",
-  background: "hsl(0, 0%, 100%)",
-  text: "hsl(240, 10%, 3.9%)",
-  border: "hsl(240, 5.9%, 90%)",
-  muted: "hsl(240, 4.8%, 95.9%)",
-  mutedForeground: "hsl(240, 5%, 64.9%)",
-  accent: "hsl(240, 4.8%, 95.9%)",
-};
-
-const main = {
-  backgroundColor: colors.muted,
-  fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
-};
-
-const container = {
-  margin: "0 auto",
-  padding: "32px 20px",
-  maxWidth: "600px",
-  backgroundColor: colors.background,
-  borderRadius: "12px",
-};
-
-const headerSection = {
-  paddingBottom: "24px",
-  textAlign: "center" as const,
-};
-
-const logo = {
-  display: "block",
-  margin: "0 auto",
-};
-
-const titleSection = {
-  marginBottom: "24px",
-  textAlign: "center" as const,
-};
-
-const heading = {
-  fontSize: "22px",
-  fontWeight: "bold" as const,
-  color: colors.text,
-  margin: "0",
-};
-
-const infoCard = {
-  backgroundColor: colors.muted,
-  borderRadius: "8px",
-  padding: "16px 20px",
-};
-
-const infoRow = {
-  display: "flex" as const,
-  fontSize: "15px",
-  color: colors.text,
-  margin: "0",
-  padding: "4px 0",
-};
-
-const infoLabel = {
-  fontWeight: "600" as const,
-  minWidth: "80px",
-  marginRight: "12px",
-  color: colors.mutedForeground,
-};
-
-const infoValue = {
-  color: colors.text,
-};
-
-const infoHr = {
-  borderColor: colors.border,
-  margin: "8px 0",
-};
-
-const label = {
-  fontSize: "15px",
-  fontWeight: "600" as const,
-  color: colors.text,
-  marginBottom: "8px",
-};
-
-const messageBox = {
-  backgroundColor: colors.muted,
-  padding: "16px",
-  borderRadius: "6px",
-  fontSize: "15px",
-  color: colors.text,
-  fontStyle: "italic" as const,
-};
-
-const hr = {
-  borderColor: colors.border,
-  margin: "24px 0",
-};
-
-const footerSection = {
-  textAlign: "center" as const,
-  paddingTop: "8px",
-};
-
-const footerText = {
-  fontSize: "14px",
-  color: colors.mutedForeground,
-  marginBottom: "16px",
-};
-
-const button = {
-  backgroundColor: colors.primary,
-  color: "hsl(0, 0%, 98%)",
-  padding: "12px 28px",
-  borderRadius: "6px",
-  fontSize: "15px",
-  textDecoration: "none",
-  fontWeight: "500" as const,
-};

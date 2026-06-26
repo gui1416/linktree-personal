@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
 import { Resend } from "resend";
-import { render } from "@react-email/components";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { supabase } from "@/lib/supabase";
@@ -37,15 +36,13 @@ export async function DELETE(
     { locale: ptBR }
   );
 
-  const cancellationHtml = await render(
-    AppointmentCancellationEmail({
-      nome: appointment.name,
-      data: formattedDate,
-      horario: appointment.time,
-      assunto: appointment.subject,
-      ownerName: SCHEDULING_CONFIG.ownerName,
-    })
-  );
+  const cancellationHtml = AppointmentCancellationEmail({
+    nome: appointment.name,
+    data: formattedDate,
+    horario: appointment.time,
+    assunto: appointment.subject,
+    ownerName: SCHEDULING_CONFIG.ownerName,
+  });
 
   await resend.emails.send({
     from: process.env.RESEND_FROM_EMAIL!,

@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { Resend } from "resend";
-import { render } from "@react-email/components";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { supabase } from "@/lib/supabase";
@@ -67,27 +66,23 @@ export async function POST(req: NextRequest) {
     { locale: ptBR }
   );
 
-  const notificationHtml = await render(
-    AppointmentNotificationEmail({
-      nome: name,
-      email,
-      telefone: phone,
-      data: formattedDate,
-      horario: time,
-      assunto: subject,
-      mensagem: message,
-    })
-  );
+  const notificationHtml = AppointmentNotificationEmail({
+    nome: name,
+    email,
+    telefone: phone,
+    data: formattedDate,
+    horario: time,
+    assunto: subject,
+    mensagem: message,
+  });
 
-  const confirmationHtml = await render(
-    AppointmentConfirmationEmail({
-      nome: name,
-      data: formattedDate,
-      horario: time,
-      assunto: subject,
-      ownerName: SCHEDULING_CONFIG.ownerName,
-    })
-  );
+  const confirmationHtml = AppointmentConfirmationEmail({
+    nome: name,
+    data: formattedDate,
+    horario: time,
+    assunto: subject,
+    ownerName: SCHEDULING_CONFIG.ownerName,
+  });
 
   await resend.emails.send({
     from: process.env.RESEND_FROM_EMAIL!,
