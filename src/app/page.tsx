@@ -3,6 +3,7 @@ import { LinkButton } from "@/components/link-button"
 import { SocialIcons } from "@/components/social-icons"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Card, CardContent } from "@/components/ui/card"
+import { SchedulingDialog } from "@/components/scheduling/scheduling-dialog"
 
 export default function LinktreePage() {
  return (
@@ -36,9 +37,7 @@ export default function LinktreePage() {
        <LinkButton href="https://drive.google.com/drive/folders/1Z9xQtGcCLisL0YaYH4XfEWrPvkxZ9Z8r?usp=sharing" icon="award" className="animate-fade-in delay-400">
         Certificados
        </LinkButton>
-       <LinkButton href="https://forms.gle/i5Vkv2VVyzxuJTMn6" icon="calendar" className="animate-fade-in delay-500">
-        Agendar Contato
-       </LinkButton>
+       <SchedulingDialog />
        <LinkButton href="/commits" icon="git-commit" className="animate-fade-in delay-500">
         Últimos Commits
        </LinkButton>
